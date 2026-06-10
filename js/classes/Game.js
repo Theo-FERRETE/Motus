@@ -17,10 +17,10 @@ class Game {
     this.status     = 'playing'; // 'playing' | 'won' | 'lost'
   }
 
-  get secret()    { return this.#secret; }
-  get length()    { return this.#length; }
+  get secret() { return this.#secret; }
+  get length() { return this.#length; }
   get keyStates() { return { ...this.#keyStates }; }
-  get locked()    { return [...this.#locked]; }
+  get locked() { return [...this.#locked]; }
 
   // Retourne l'index rempli, ou -1 si impossible
   addLetter(letter) {

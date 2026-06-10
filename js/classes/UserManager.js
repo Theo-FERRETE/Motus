@@ -5,7 +5,7 @@ class UserManager {
     this.#db = db;
   }
 
-  // Hash basique côté client (en prod: bcrypt serveur)
+  // client-side only
   #hash(password) {
     let h = 5381;
     for (let i = 0; i < password.length; i++) {

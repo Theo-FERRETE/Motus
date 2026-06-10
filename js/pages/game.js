@@ -8,15 +8,15 @@ class GamePage {
     'ç':'c'
   };
 
-  #db           = new Database();
-  #userManager  = new UserManager(this.#db);
-  #wordManager  = new WordManager();
+  #db = new Database();
+  #userManager = new UserManager(this.#db);
+  #wordManager = new WordManager();
   #scoreManager = new ScoreManager(this.#db);
-  #currentUser  = null;
+  #currentUser = null;
 
-  #game       = null;
+  #game = null;
   #difficulty = 'easy';
-  #revealing  = false;
+  #revealing = false;
 
   constructor() {
     if (!this.#userManager.isLoggedIn()) {
@@ -59,14 +59,12 @@ class GamePage {
     this.#startGame();
   }
 
-  // --- Normalisation clavier français ---
   #normalizeKey(key) {
     return (GamePage.#ACCENT_MAP[key.toLowerCase()] ?? key).toUpperCase();
   }
 
-  // --- Stats joueur ---
   #renderStats() {
-    const stats     = this.#scoreManager.getStats(this.#currentUser.id);
+    const stats = this.#scoreManager.getStats(this.#currentUser.id);
     const container = document.getElementById('player-stats');
     if (!container) return;
 
@@ -80,7 +78,6 @@ class GamePage {
       `;
   }
 
-  // --- Difficulté ---
   #setDifficulty(diff) {
     this.#difficulty = diff;
     document.querySelectorAll('.diff-btn').forEach(btn => {
@@ -89,10 +86,9 @@ class GamePage {
     this.#startGame();
   }
 
-  // --- Démarrer une partie ---
   #startGame() {
-    const word      = this.#wordManager.getRandom(this.#difficulty);
-    this.#game      = new Game(word, this.#difficulty);
+    const word = this.#wordManager.getRandom(this.#difficulty);
+    this.#game = new Game(word, this.#difficulty);
     this.#revealing = false;
 
     this.#buildGrid();
@@ -105,28 +101,26 @@ class GamePage {
     if (ngZone) ngZone.innerHTML = '';
   }
 
-  // --- Construction de la grille ---
   #buildGrid() {
     const grid = document.getElementById('grid');
-    grid.innerHTML    = '';
+    grid.innerHTML = '';
     grid.dataset.diff = this.#difficulty;
 
     for (let row = 0; row < this.#game.maxTries; row++) {
       const rowEl = document.createElement('div');
       rowEl.className = 'grid-row';
-      rowEl.id        = `row-${row}`;
+      rowEl.id = `row-${row}`;
 
       for (let col = 0; col < this.#game.length; col++) {
         const cell = document.createElement('div');
         cell.className = 'cell';
-        cell.id        = `cell-${row}-${col}`;
+        cell.id = `cell-${row}-${col}`;
         rowEl.appendChild(cell);
       }
       grid.appendChild(rowEl);
     }
   }
 
-  // --- Mise à jour de la ligne courante ---
   #cellClass(col, locked, word) {
     if (col === 0)   return 'cell active-row first-letter';
     if (locked[col]) return 'cell active-row correct';
@@ -135,19 +129,19 @@ class GamePage {
   }
 
   #updateCurrentRow() {
-    const row    = this.#game.attempts.length;
-    const word   = this.#game.current;
+    const row = this.#game.attempts.length;
+    const word = this.#game.current;
     const locked = this.#game.locked;
 
     for (let col = 0; col < this.#game.length; col++) {
       const cell = document.getElementById(`cell-${row}-${col}`);
       if (!cell) continue;
       cell.textContent = word[col] || '';
-      cell.className   = this.#cellClass(col, locked, word);
+      cell.className = this.#cellClass(col, locked, word);
     }
   }
 
-  // --- Animation de révélation ---
+  // Chaque cellule se réduit puis révèle sa couleur avec un décalage par colonne
   #revealRow(rowIndex, word, result) {
     return new Promise(resolve => {
       result.forEach((state, col) => {
@@ -155,13 +149,13 @@ class GamePage {
         if (!cell) return;
 
         setTimeout(() => {
-          cell.style.transform  = 'scale(0.85)';
+          cell.style.transform = 'scale(0.85)';
           cell.style.transition = 'transform .1s ease-in';
 
           setTimeout(() => {
-            cell.className        = `cell ${state}`;
-            cell.textContent      = word[col];
-            cell.style.transform  = '';
+            cell.className = `cell ${state}`;
+            cell.textContent = word[col];
+            cell.style.transform = '';
             cell.style.transition = 'transform .1s ease-out';
             if (col === result.length - 1) setTimeout(resolve, 200);
           }, 100);
@@ -170,7 +164,6 @@ class GamePage {
     });
   }
 
-  // --- Soumission d'un essai ---
   async #submitGuess() {
     if (this.#revealing) return;
 
@@ -187,7 +180,7 @@ class GamePage {
 
     if (res.error) return;
 
-    const attempt  = this.#game.attempts[this.#game.attempts.length - 1];
+    const attempt = this.#game.attempts[this.#game.attempts.length - 1];
     const rowIndex = this.#game.attempts.length - 1;
 
     this.#revealing = true;
@@ -210,7 +203,6 @@ class GamePage {
     }
   }
 
-  // --- Gestion des touches ---
   #handleKey(key) {
     if (this.#revealing || !this.#game || this.#game.status !== 'playing') return;
 
@@ -225,7 +217,7 @@ class GamePage {
     } else if (/^[A-Z]$/.test(normalized)) {
       const col = this.#game.addLetter(normalized);
       if (col !== -1) {
-        const row  = this.#game.attempts.length;
+        const row = this.#game.attempts.length;
         const cell = document.getElementById(`cell-${row}-${col}`);
         if (cell) {
           cell.classList.remove('pop');
@@ -237,7 +229,6 @@ class GamePage {
     }
   }
 
-  // --- Clavier virtuel ---
   #buildKeyboard() {
     const keyboard = document.getElementById('keyboard');
     const rows = [
@@ -267,7 +258,6 @@ class GamePage {
     });
   }
 
-  // --- Messages ---
   #showMessage(text, type) {
     document.getElementById('message-bar').innerHTML = `<span class="message ${type}">${text}</span>`;
   }
@@ -276,19 +266,17 @@ class GamePage {
     document.getElementById('message-bar').innerHTML = '';
   }
 
-  // --- Score ---
   #saveScore(won) {
     this.#scoreManager.save({
-      userId    : this.#currentUser.id,
-      username  : this.#currentUser.username,
-      word      : this.#game.secret,
+      userId: this.#currentUser.id,
+      username: this.#currentUser.username,
+      word: this.#game.secret,
       difficulty: this.#difficulty,
-      attempts  : this.#game.attempts.length,
+      attempts: this.#game.attempts.length,
       won
     });
   }
 
-  // --- Fin de partie ---
   #showNewGame(showWord = false) {
     const zone = document.getElementById('new-game-zone');
     zone.innerHTML = `

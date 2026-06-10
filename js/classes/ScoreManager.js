@@ -36,10 +36,10 @@ class ScoreManager {
     const wins = all.filter(s => s.won);
 
     return {
-      total : all.length,
-      wins  : wins.length,
-      rate  : all.length ? Math.round((wins.length / all.length) * 100) : 0,
-      best  : wins.length ? Math.min(...wins.map(s => s.attempts)) : null
+      total: all.length,
+      wins: wins.length,
+      rate: all.length ? Math.round((wins.length / all.length) * 100) : 0,
+      best: wins.length ? Math.min(...wins.map(s => s.attempts)) : null
     };
   }
 }
