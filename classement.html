@@ -67,16 +67,6 @@
 <!-- Page -->
 <script src="js/pages/classement.js"></script>
 
-<script>
-  const user = (new UserManager(new Database())).getCurrentUser();
-  if (user) {
-    document.getElementById('header-username').innerHTML = `Bonjour, <strong>${user.username}</strong>`;
-  }
-  document.getElementById('btn-logout').addEventListener('click', () => {
-    userManager.logout();
-    window.location.href = 'index.html';
-  });
-</script>
 
 </body>
 </html>
