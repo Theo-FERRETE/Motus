@@ -1,0 +1,32 @@
+.header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--accent);
+  padding: .9rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-logo {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: 4px;
+  text-decoration: none;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.header-user {
+  font-size: .85rem;
+  color: var(--muted);
+  margin-right: .25rem;
+}
+
+.header-user strong {
+  color: var(--text);
+}

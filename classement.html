@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOTUS — Classement</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/classement.css">
+</head>
+<body>
+
+<header class="header">
+  <a class="header-logo" href="game.html">MOTUS</a>
+  <nav class="header-nav">
+    <span class="header-user" id="header-username"></span>
+    <a class="btn btn-ghost" href="game.html">🎮 Jouer</a>
+    <button class="btn btn-ghost" id="btn-logout">Déconnexion</button>
+  </nav>
+</header>
+
+<main class="classement-page">
+
+  <div class="page-header">
+    <h1>🏆 Wall of Fame</h1>
+    <p>Les meilleurs joueurs, classés par nombre d'essais</p>
+  </div>
+
+  <!-- Filtres -->
+  <div class="filter-row">
+    <span class="filter-label">Filtrer :</span>
+    <button class="filter-btn active" data-filter="all">Tous</button>
+    <button class="filter-btn" data-filter="easy">Facile</button>
+    <button class="filter-btn" data-filter="medium">Moyen</button>
+    <button class="filter-btn" data-filter="hard">Difficile</button>
+  </div>
+
+  <!-- Tableau des scores -->
+  <table class="scores-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Joueur</th>
+        <th>Mot trouvé</th>
+        <th>Difficulté</th>
+        <th>Essais</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="scores-body"></tbody>
+  </table>
+
+  <!-- État vide -->
+  <div class="empty-state" id="no-scores" style="display: none">
+    <div class="icon">🏅</div>
+    <p>Aucun score pour cette catégorie.</p>
+    <p style="margin-top: .4rem; font-size: .82rem">Gagnez une partie pour apparaître ici !</p>
+  </div>
+
+</main>
+
+<!-- Classes -->
+<script src="js/classes/Database.js"></script>
+<script src="js/classes/UserManager.js"></script>
+<script src="js/classes/ScoreManager.js"></script>
+<!-- Page -->
+<script src="js/pages/classement.js"></script>
+
+<script>
+  const user = (new UserManager(new Database())).getCurrentUser();
+  if (user) {
+    document.getElementById('header-username').innerHTML = `Bonjour, <strong>${user.username}</strong>`;
+  }
+  document.getElementById('btn-logout').addEventListener('click', () => {
+    userManager.logout();
+    window.location.href = 'index.html';
+  });
+</script>
+
+</body>
+</html>

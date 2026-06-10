@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOTUS — Jouer</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/game.css">
+</head>
+<body>
+
+<header class="header">
+  <a class="header-logo" href="game.html">MOTUS</a>
+  <nav class="header-nav">
+    <span class="header-user" id="header-username"></span>
+    <a class="btn btn-ghost" href="classement.html">🏆 Classement</a>
+    <button class="btn btn-ghost" id="btn-logout">Déconnexion</button>
+  </nav>
+</header>
+
+<main class="game-page">
+
+  <!-- Difficulté -->
+  <div class="diff-row">
+    <span class="diff-label">Difficulté :</span>
+    <button class="diff-btn active" data-diff="easy">Facile (5 lettres)</button>
+    <button class="diff-btn" data-diff="medium">Moyen (6 lettres)</button>
+    <button class="diff-btn" data-diff="hard">Difficile (7 lettres)</button>
+  </div>
+
+  <!-- Stats joueur -->
+  <div class="player-stats" id="player-stats"></div>
+
+  <!-- Grille -->
+  <div class="grid" id="grid" data-diff="easy"></div>
+
+  <!-- Message -->
+  <div class="message-bar" id="message-bar"></div>
+
+  <!-- Nouvelle partie -->
+  <div class="new-game-zone" id="new-game-zone"></div>
+
+  <!-- Clavier virtuel -->
+  <div class="keyboard" id="keyboard"></div>
+
+</main>
+
+<!-- Classes -->
+<script src="js/classes/Database.js"></script>
+<script src="js/classes/UserManager.js"></script>
+<script src="js/classes/WordManager.js"></script>
+<script src="js/classes/Game.js"></script>
+<script src="js/classes/ScoreManager.js"></script>
+<!-- Page -->
+<script src="js/pages/game.js"></script>
+
+<script>
+  // Affichage du nom d'utilisateur et déconnexion
+  const user = (new UserManager(new Database())).getCurrentUser();
+  if (user) {
+    document.getElementById('header-username').innerHTML = `Bonjour, <strong>${user.username}</strong>`;
+  }
+  document.getElementById('btn-logout').addEventListener('click', () => {
+    userManager.logout();
+    window.location.href = 'index.html';
+  });
+</script>
+
+</body>
+</html>

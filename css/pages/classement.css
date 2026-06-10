@@ -1,0 +1,135 @@
+.classement-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.page-header {
+  margin-bottom: 1.75rem;
+}
+
+.page-header h1 {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+
+.page-header p {
+  color: var(--muted);
+  font-size: .88rem;
+  margin-top: .3rem;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 1.25rem;
+}
+
+.filter-label {
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+.filter-btn {
+  padding: .3rem .8rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.filter-btn.active             { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+.filter-btn:not(.active):hover { background: var(--surface2); color: var(--text); }
+
+.scores-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scores-table th {
+  text-align: left;
+  padding: .65rem 1rem;
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.scores-table td {
+  padding: .7rem 1rem;
+  border-bottom: 1px solid rgba(42, 58, 85, .5);
+  font-size: .88rem;
+}
+
+.scores-table tr:hover td {
+  background: rgba(25, 35, 56, .6);
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: .78rem;
+}
+
+.rank-1 { background: #fbbf24; color: #000; }
+.rank-2 { background: #9ca3af; color: #000; }
+.rank-3 { background: #92400e; color: #fff; }
+.rank-n { background: var(--surface2); color: var(--muted); }
+
+.diff-pill {
+  display: inline-block;
+  padding: .12rem .55rem;
+  border-radius: 10px;
+  font-size: .73rem;
+  font-weight: 600;
+}
+
+.diff-pill.easy   { background: rgba(34, 197, 94, .12);  color: #86efac; }
+.diff-pill.medium { background: rgba(249, 115, 22, .12); color: #fdba74; }
+.diff-pill.hard   { background: rgba(239, 68, 68, .12);  color: #fca5a5; }
+
+.score-word {
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.score-attempts {
+  font-weight: 700;
+}
+
+.score-date {
+  color: var(--muted);
+  font-size: .82rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3.5rem 1rem;
+  color: var(--muted);
+}
+
+.empty-state .icon {
+  font-size: 2.5rem;
+  margin-bottom: .75rem;
+}
+
+.empty-state p {
+  font-size: .9rem;
+}
